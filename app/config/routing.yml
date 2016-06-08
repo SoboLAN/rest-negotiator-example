@@ -1,0 +1,2 @@
+negotiatorexample:
+    resource: "@SoboLANRestNegotiatorExampleBundle/Resources/config/routing.yml"

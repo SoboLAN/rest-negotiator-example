@@ -1,0 +1,23 @@
+parameters:
+
+    sobolan.restnegotiatorexample.transformers.default:
+        - "sobolan.restnegotiator.transformer.entity"
+        - "sobolan.restnegotiatorexample.usertransformer"
+
+services:
+
+    sobolan.restnegotiatorexample.usertransformer:
+        class: SoboLAN\RestNegotiatorExampleBundle\Transformer\UserTransformer
+
+    sobolan.restnegotiatorexample.secondusertransformer:
+        class: SoboLAN\RestNegotiatorExampleBundle\Transformer\SecondUserTransformer
+
+    sobolan.restnegotiatorexample.negotiator:
+        class: SoboLAN\RestNegotiator\Negotiator\RestNegotiator
+        arguments:
+            - '@request_stack'
+            - '@sobolan.restnegotiator.serializer.factory'
+            - '@sobolan.restnegotiator.version.parser'
+            - '@sobolan.restnegotiator.format.parser'
+            - %sobolan.restnegotiatorexample.transformers.default%
+            - %sobolan.restnegotiator.encoders.default%

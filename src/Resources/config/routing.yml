@@ -1,0 +1,31 @@
+# please note that the only difference between the 2 routes below is the HTTP verb
+
+example_get_route:
+    pattern: /user
+    requirements:
+        _method: GET
+    defaults:
+        _controller: sobolan.restnegotiatorexample.controller:getAction
+        versions:
+            1:
+                transformers:
+                    - "sobolan.restnegotiatorexample.usertransformer"
+            2:
+                transformers:
+                    - "sobolan.restnegotiatorexample.secondusertransformer"
+            default_version: 1
+
+example_create_route:
+    pattern: /user
+    requirements:
+        _method: POST
+    defaults:
+        _controller: sobolan.restnegotiatorexample.controller:createAction
+        versions:
+            1:
+                transformers:
+                    - "sobolan.restnegotiatorexample.usertransformer"
+            2:
+                transformers:
+                    - "sobolan.restnegotiatorexample.secondusertransformer"
+            default_version: 1

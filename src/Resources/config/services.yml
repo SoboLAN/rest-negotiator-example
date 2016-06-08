@@ -1,0 +1,6 @@
+services:
+
+    sobolan.restnegotiatorexample.controller:
+        class: SoboLAN\RestNegotiatorExampleBundle\Controller\DefaultController
+        arguments:
+            - '@sobolan.restnegotiatorexample.negotiator'

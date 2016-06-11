@@ -2,19 +2,19 @@
 
 namespace SoboLAN\RestNegotiatorExampleBundle\Transformer;
 
-use SoboLAN\RestNegotiatorExampleBundle\Entity\User;
+use SoboLAN\RestNegotiatorExampleBundle\Entity\Address;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use SoboLAN\RestNegotiator\Transformers\SerializedClassInterface;
 
-class SecondUserTransformer implements NormalizerInterface, DenormalizerInterface, SerializedClassInterface
+class AddressTransformer implements NormalizerInterface, DenormalizerInterface, SerializedClassInterface
 {
     /**
      * {@inheritdoc}
      */
     public function getSerializedClass()
     {
-        return User::CLASS_NAME;
+        return Address::CLASS_NAME;
     }
 
     /**
@@ -22,10 +22,12 @@ class SecondUserTransformer implements NormalizerInterface, DenormalizerInterfac
      */
     public function normalize($object, $format = null, array $context = array())
     {
-        return array(
-            'name' => $object->getName(),
-            'age' => $object->getAge()
-        );
+        return [
+            'street' => $object->getStreet(),
+            'nr' => $object->getNr(),
+            'city' => $object->getCity(),
+            'country' => $object->getCountry()
+        ];
     }
 
     /**
@@ -33,7 +35,7 @@ class SecondUserTransformer implements NormalizerInterface, DenormalizerInterfac
      */
     public function supportsNormalization($data, $format = null)
     {
-        return ($data instanceof User);
+        return ($data instanceof Address);
     }
 
     /**
@@ -41,18 +43,22 @@ class SecondUserTransformer implements NormalizerInterface, DenormalizerInterfac
      */
     public function denormalize($data, $class, $format = null, array $context = array())
     {
-        $nullData = array(
-            'name' => null,
-            'age' => null
-        );
+        $nullData = [
+            'street' => null,
+            'nr' => null,
+            'city' => null,
+            'country' => null
+        ];
 
         $values = array_merge($nullData, $data);
 
-        $userObject = new User();
-        $userObject->setName($values['name']);
-        $userObject->setAge($values['age']);
+        $address = new Address();
+        $address->setStreet($values['street']);
+        $address->setNr($values['nr']);
+        $address->setCity($values['city']);
+        $address->setCountry($values['country']);
 
-        return $userObject;
+        return $address;
     }
 
     /**
@@ -60,6 +66,6 @@ class SecondUserTransformer implements NormalizerInterface, DenormalizerInterfac
      */
     public function supportsDenormalization($data, $type, $format = null)
     {
-        return ($type == User::CLASS_NAME);
+        return ($type == Address::CLASS_NAME);
     }
 }

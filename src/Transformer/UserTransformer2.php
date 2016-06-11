@@ -10,7 +10,7 @@ use Symfony\Component\Serializer\SerializerAwareInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 use SoboLAN\RestNegotiator\Transformers\SerializedClassInterface;
 
-class UserTransformer implements
+class UserTransformer2 implements
     NormalizerInterface,
     DenormalizerInterface,
     SerializedClassInterface,
@@ -40,7 +40,6 @@ class UserTransformer implements
     public function normalize($object, $format = null, array $context = array())
     {
         return [
-            'id' => $object->getId(),
             'name' => $object->getName(),
             'email' => $object->getEmail(),
             'age' => $object->getAge(),
@@ -62,7 +61,6 @@ class UserTransformer implements
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         $nullData = array(
-            'id' => null,
             'name' => null,
             'email' => null,
             'age' => null
@@ -71,7 +69,6 @@ class UserTransformer implements
         $values = array_merge($nullData, $data);
 
         $userObject = new User();
-        $userObject->setId($values['id']);
         $userObject->setName($values['name']);
         $userObject->setEmail($values['email']);
         $userObject->setAge($values['age']);

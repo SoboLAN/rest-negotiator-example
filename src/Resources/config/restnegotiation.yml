@@ -3,14 +3,31 @@ parameters:
     sobolan.restnegotiatorexample.transformers.default:
         - "sobolan.restnegotiator.transformer.entity"
         - "sobolan.restnegotiatorexample.usertransformer"
+        - "sobolan.restnegotiatorexample.addresstransformer"
 
 services:
 
+    # default transformer for User, contains all fields
     sobolan.restnegotiatorexample.usertransformer:
         class: SoboLAN\RestNegotiatorExampleBundle\Transformer\UserTransformer
 
-    sobolan.restnegotiatorexample.secondusertransformer:
-        class: SoboLAN\RestNegotiatorExampleBundle\Transformer\SecondUserTransformer
+    # default transformer for Address, contains all fields
+    sobolan.restnegotiatorexample.addresstransformer:
+        class: SoboLAN\RestNegotiatorExampleBundle\Transformer\AddressTransformer
+
+    # field "id" is missing when using this one
+    sobolan.restnegotiatorexample.usertransformer2:
+        class: SoboLAN\RestNegotiatorExampleBundle\Transformer\UserTransformer2
+
+    # street number is missing when using this one
+    sobolan.restnegotiatorexample.addresstransformer2:
+        class: SoboLAN\RestNegotiatorExampleBundle\Transformer\AddressTransformer2
+
+    # when using this one:
+    # - fields "id" and "address" are missing
+    # - denormalization is not supported
+    sobolan.restnegotiatorexample.usertransformer3:
+        class: SoboLAN\RestNegotiatorExampleBundle\Transformer\UserTransformer3
 
     sobolan.restnegotiatorexample.negotiator:
         class: SoboLAN\RestNegotiator\Negotiator\RestNegotiator
@@ -19,5 +36,5 @@ services:
             - '@sobolan.restnegotiator.serializer.factory'
             - '@sobolan.restnegotiator.version.parser'
             - '@sobolan.restnegotiator.format.parser'
-            - %sobolan.restnegotiatorexample.transformers.default%
-            - %sobolan.restnegotiator.encoders.default%
+            - '%sobolan.restnegotiatorexample.transformers.default%'
+            - '%sobolan.restnegotiator.encoders.default%'
